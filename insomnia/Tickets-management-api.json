@@ -1,0 +1,452 @@
+{
+  "_type": "export",
+  "__export_format": 4,
+  "__export_date": "2026-09-02T14:00:00.000Z",
+  "__export_source": "tickets-management",
+  "resources": [
+    {
+      "_id": "wrk_tickets",
+      "parentId": null,
+      "modified": 1756800000000,
+      "created": 1756800000000,
+      "name": "Tickets-Management API",
+      "description": "Colección REST para la API de gestión de tickets. 1) Login 2) copiar accessToken a jwt_token.",
+      "_type": "workspace",
+      "scope": "collection"
+    },
+    {
+      "_id": "env_base",
+      "parentId": "wrk_tickets",
+      "modified": 1756800000000,
+      "created": 1756800000000,
+      "name": "Base",
+      "data": {
+        "base_url": "http://localhost:4000/api/v1",
+        "jwt_token": ""
+      },
+      "dataPropertyOrder": {
+        "&": ["base_url", "jwt_token"]
+      },
+      "color": "#fe981f",
+      "isPrivate": false,
+      "_type": "environment"
+    },
+    {
+      "_id": "fld_auth",
+      "parentId": "wrk_tickets",
+      "modified": 1756800000000,
+      "created": 1756800000000,
+      "name": "Auth",
+      "_type": "request_group"
+    },
+    {
+      "_id": "req_login_admin",
+      "parentId": "fld_auth",
+      "modified": 1756800000000,
+      "created": 1756800000000,
+      "name": "Login administrador",
+      "url": "{{ _.base_url }}/auth/login",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"email\": \"admin@tickets.co\",\n  \"password\": \"Demo1234!\"\n}"
+      },
+      "headers": [{ "name": "Content-Type", "value": "application/json" }],
+      "_type": "request"
+    },
+    {
+      "_id": "req_login_agent",
+      "parentId": "fld_auth",
+      "modified": 1756800000000,
+      "created": 1756800000000,
+      "name": "Login agente",
+      "url": "{{ _.base_url }}/auth/login",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"email\": \"sarah@tickets.co\",\n  \"password\": \"Demo1234!\"\n}"
+      },
+      "headers": [{ "name": "Content-Type", "value": "application/json" }],
+      "_type": "request"
+    },
+    {
+      "_id": "req_login_supervisor",
+      "parentId": "fld_auth",
+      "modified": 1756800000000,
+      "created": 1756800000000,
+      "name": "Login supervisor",
+      "url": "{{ _.base_url }}/auth/login",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"email\": \"supervisor@tickets.co\",\n  \"password\": \"Demo1234!\"\n}"
+      },
+      "headers": [{ "name": "Content-Type", "value": "application/json" }],
+      "_type": "request"
+    },
+    {
+      "_id": "req_me",
+      "parentId": "fld_auth",
+      "modified": 1756800000000,
+      "created": 1756800000000,
+      "name": "Perfil actual",
+      "url": "{{ _.base_url }}/auth/me",
+      "method": "GET",
+      "headers": [{ "name": "Authorization", "value": "Bearer {{ _.jwt_token }}" }],
+      "_type": "request"
+    },
+    {
+      "_id": "fld_dashboard",
+      "parentId": "wrk_tickets",
+      "modified": 1756800000000,
+      "created": 1756800000000,
+      "name": "Dashboard",
+      "_type": "request_group"
+    },
+    {
+      "_id": "req_metrics",
+      "parentId": "fld_dashboard",
+      "modified": 1756800000000,
+      "created": 1756800000000,
+      "name": "Métricas operativas",
+      "url": "{{ _.base_url }}/dashboard/metrics",
+      "method": "GET",
+      "headers": [{ "name": "Authorization", "value": "Bearer {{ _.jwt_token }}" }],
+      "_type": "request"
+    },
+    {
+      "_id": "fld_tickets",
+      "parentId": "wrk_tickets",
+      "modified": 1756800000000,
+      "created": 1756800000000,
+      "name": "Tickets",
+      "_type": "request_group"
+    },
+    {
+      "_id": "req_list_tickets",
+      "parentId": "fld_tickets",
+      "modified": 1756800000000,
+      "created": 1756800000000,
+      "name": "Listar tickets",
+      "url": "{{ _.base_url }}/tickets?page=1&limit=10",
+      "method": "GET",
+      "headers": [{ "name": "Authorization", "value": "Bearer {{ _.jwt_token }}" }],
+      "_type": "request"
+    },
+    {
+      "_id": "req_list_stale",
+      "parentId": "fld_tickets",
+      "modified": 1756800000000,
+      "created": 1756800000000,
+      "name": "Tickets sin actualización > 48h",
+      "url": "{{ _.base_url }}/tickets?stale=true&page=1&limit=20",
+      "method": "GET",
+      "headers": [{ "name": "Authorization", "value": "Bearer {{ _.jwt_token }}" }],
+      "_type": "request"
+    },
+    {
+      "_id": "req_filter_tickets",
+      "parentId": "fld_tickets",
+      "modified": 1756800000000,
+      "created": 1756800000000,
+      "name": "Filtrar por prioridad crítica",
+      "url": "{{ _.base_url }}/tickets?priority=critical&search=servidor",
+      "method": "GET",
+      "headers": [{ "name": "Authorization", "value": "Bearer {{ _.jwt_token }}" }],
+      "_type": "request"
+    },
+    {
+      "_id": "req_get_ticket",
+      "parentId": "fld_tickets",
+      "modified": 1756800000000,
+      "created": 1756800000000,
+      "name": "Detalle TCK-8902",
+      "url": "{{ _.base_url }}/tickets/TCK-8902",
+      "method": "GET",
+      "headers": [{ "name": "Authorization", "value": "Bearer {{ _.jwt_token }}" }],
+      "_type": "request"
+    },
+    {
+      "_id": "req_create_ticket",
+      "parentId": "fld_tickets",
+      "modified": 1756800000000,
+      "created": 1756800000000,
+      "name": "Crear ticket",
+      "url": "{{ _.base_url }}/tickets",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"clientId\": \"33333333-3333-3333-3333-333333333001\",\n  \"title\": \"Falla al generar reporte mensual\",\n  \"requirement\": \"El reporte de ocupación no se genera desde anoche. Necesitamos el archivo PDF del mes y confirmar que el job nocturno quedó programado.\",\n  \"priority\": \"high\",\n  \"categoryId\": \"55555555-5555-5555-5555-555555555010\"\n}"
+      },
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" },
+        { "name": "Authorization", "value": "Bearer {{ _.jwt_token }}" }
+      ],
+      "_type": "request"
+    },
+    {
+      "_id": "req_update_ticket",
+      "parentId": "fld_tickets",
+      "modified": 1756800000000,
+      "created": 1756800000000,
+      "name": "Actualizar estado",
+      "url": "{{ _.base_url }}/tickets/TCK-8902",
+      "method": "PATCH",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"status\": \"in_progress\"\n}"
+      },
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" },
+        { "name": "Authorization", "value": "Bearer {{ _.jwt_token }}" }
+      ],
+      "_type": "request"
+    },
+    {
+      "_id": "req_assign_ticket",
+      "parentId": "fld_tickets",
+      "modified": 1756800000000,
+      "created": 1756800000000,
+      "name": "Asignar ticket",
+      "url": "{{ _.base_url }}/tickets/TCK-8888/assign",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"assignedTo\": \"22222222-2222-2222-2222-222222222003\"\n}"
+      },
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" },
+        { "name": "Authorization", "value": "Bearer {{ _.jwt_token }}" }
+      ],
+      "_type": "request"
+    },
+    {
+      "_id": "req_comment",
+      "parentId": "fld_tickets",
+      "modified": 1756800000000,
+      "created": 1756800000000,
+      "name": "Agregar comentario",
+      "url": "{{ _.base_url }}/tickets/TCK-8902/comments",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"body\": \"Ya reinicié el pool de conexiones y sigo monitoreando.\",\n  \"isInternal\": false\n}"
+      },
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" },
+        { "name": "Authorization", "value": "Bearer {{ _.jwt_token }}" }
+      ],
+      "_type": "request"
+    },
+    {
+      "_id": "req_internal_note",
+      "parentId": "fld_tickets",
+      "modified": 1756800000000,
+      "created": 1756800000000,
+      "name": "Agregar nota interna",
+      "url": "{{ _.base_url }}/tickets/TCK-8902/comments",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"body\": \"Posible causa: widget de dashboard desplegado anoche. Coordinar con desarrollo.\",\n  \"isInternal\": true\n}"
+      },
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" },
+        { "name": "Authorization", "value": "Bearer {{ _.jwt_token }}" }
+      ],
+      "_type": "request"
+    },
+    {
+      "_id": "req_close",
+      "parentId": "fld_tickets",
+      "modified": 1756800000000,
+      "created": 1756800000000,
+      "name": "Cerrar ticket",
+      "url": "{{ _.base_url }}/tickets/TCK-8890/close",
+      "method": "POST",
+      "headers": [{ "name": "Authorization", "value": "Bearer {{ _.jwt_token }}" }],
+      "_type": "request"
+    },
+    {
+      "_id": "req_reopen",
+      "parentId": "fld_tickets",
+      "modified": 1756800000000,
+      "created": 1756800000000,
+      "name": "Reabrir ticket",
+      "url": "{{ _.base_url }}/tickets/TCK-8890/reopen",
+      "method": "POST",
+      "headers": [{ "name": "Authorization", "value": "Bearer {{ _.jwt_token }}" }],
+      "_type": "request"
+    },
+    {
+      "_id": "fld_clients",
+      "parentId": "wrk_tickets",
+      "modified": 1756800000000,
+      "created": 1756800000000,
+      "name": "Clientes",
+      "_type": "request_group"
+    },
+    {
+      "_id": "req_list_clients",
+      "parentId": "fld_clients",
+      "modified": 1756800000000,
+      "created": 1756800000000,
+      "name": "Listar clientes",
+      "url": "{{ _.base_url }}/clients",
+      "method": "GET",
+      "headers": [{ "name": "Authorization", "value": "Bearer {{ _.jwt_token }}" }],
+      "_type": "request"
+    },
+    {
+      "_id": "req_create_client",
+      "parentId": "fld_clients",
+      "modified": 1756800000000,
+      "created": 1756800000000,
+      "name": "Crear cliente",
+      "url": "{{ _.base_url }}/clients",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"name\": \"Andina Retail\",\n  \"contactName\": \"Marta Díaz\",\n  \"contactEmail\": \"marta.diaz@andina.example\",\n  \"contactPhone\": \"+57 300 222 0007\"\n}"
+      },
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" },
+        { "name": "Authorization", "value": "Bearer {{ _.jwt_token }}" }
+      ],
+      "_type": "request"
+    },
+    {
+      "_id": "fld_users",
+      "parentId": "wrk_tickets",
+      "modified": 1756800000000,
+      "created": 1756800000000,
+      "name": "Usuarios",
+      "_type": "request_group"
+    },
+    {
+      "_id": "req_list_users",
+      "parentId": "fld_users",
+      "modified": 1756800000000,
+      "created": 1756800000000,
+      "name": "Listar usuarios",
+      "url": "{{ _.base_url }}/users",
+      "method": "GET",
+      "headers": [{ "name": "Authorization", "value": "Bearer {{ _.jwt_token }}" }],
+      "_type": "request"
+    },
+    {
+      "_id": "req_create_user",
+      "parentId": "fld_users",
+      "modified": 1756800000000,
+      "created": 1756800000000,
+      "name": "Crear agente",
+      "url": "{{ _.base_url }}/users",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"email\": \"nuevo.agente@tickets.co\",\n  \"password\": \"Demo1234!\",\n  \"firstName\": \"Camila\",\n  \"lastName\": \"Ortiz\",\n  \"role\": \"agent\"\n}"
+      },
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" },
+        { "name": "Authorization", "value": "Bearer {{ _.jwt_token }}" }
+      ],
+      "_type": "request"
+    },
+    {
+      "_id": "fld_categories",
+      "parentId": "wrk_tickets",
+      "modified": 1756800000000,
+      "created": 1756800000000,
+      "name": "Categorías",
+      "_type": "request_group"
+    },
+    {
+      "_id": "req_list_categories",
+      "parentId": "fld_categories",
+      "modified": 1756800000000,
+      "created": 1756800000000,
+      "name": "Listar categorías",
+      "url": "{{ _.base_url }}/categories",
+      "method": "GET",
+      "headers": [{ "name": "Authorization", "value": "Bearer {{ _.jwt_token }}" }],
+      "_type": "request"
+    },
+    {
+      "_id": "req_list_categories_all",
+      "parentId": "fld_categories",
+      "modified": 1756800000000,
+      "created": 1756800000000,
+      "name": "Listar categorías (incl. inactivas)",
+      "url": "{{ _.base_url }}/categories?includeInactive=true",
+      "method": "GET",
+      "headers": [{ "name": "Authorization", "value": "Bearer {{ _.jwt_token }}" }],
+      "_type": "request"
+    },
+    {
+      "_id": "req_create_category",
+      "parentId": "fld_categories",
+      "modified": 1756800000000,
+      "created": 1756800000000,
+      "name": "Crear categoría",
+      "url": "{{ _.base_url }}/categories",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"name\": \"Red\",\n  \"description\": \"Enlaces, VPN y conectividad entre sedes.\"\n}"
+      },
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" },
+        { "name": "Authorization", "value": "Bearer {{ _.jwt_token }}" }
+      ],
+      "_type": "request"
+    },
+    {
+      "_id": "req_update_category",
+      "parentId": "fld_categories",
+      "modified": 1756800000000,
+      "created": 1756800000000,
+      "name": "Desactivar categoría",
+      "url": "{{ _.base_url }}/categories/55555555-5555-5555-5555-555555555010",
+      "method": "PATCH",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"isActive\": false\n}"
+      },
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" },
+        { "name": "Authorization", "value": "Bearer {{ _.jwt_token }}" }
+      ],
+      "_type": "request"
+    },
+    {
+      "_id": "fld_notifications",
+      "parentId": "wrk_tickets",
+      "modified": 1756800000000,
+      "created": 1756800000000,
+      "name": "Notificaciones",
+      "_type": "request_group"
+    },
+    {
+      "_id": "req_list_notifications",
+      "parentId": "fld_notifications",
+      "modified": 1756800000000,
+      "created": 1756800000000,
+      "name": "Listar notificaciones",
+      "url": "{{ _.base_url }}/notifications",
+      "method": "GET",
+      "headers": [{ "name": "Authorization", "value": "Bearer {{ _.jwt_token }}" }],
+      "_type": "request"
+    },
+    {
+      "_id": "req_read_all_notifications",
+      "parentId": "fld_notifications",
+      "modified": 1756800000000,
+      "created": 1756800000000,
+      "name": "Marcar todas como leídas",
+      "url": "{{ _.base_url }}/notifications/read-all",
+      "method": "POST",
+      "headers": [{ "name": "Authorization", "value": "Bearer {{ _.jwt_token }}" }],
+      "_type": "request"
+    }
+  ]
+}
