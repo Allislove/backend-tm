@@ -1,7 +1,7 @@
 -- =============================================================================
 -- Categorías administrables ( Innovación para que el administrador pueda agregar categorias, y ser mas agil al momento de crear un ticket para!!)
 --   psql -U postgres -d tickets_management -f sql/003_categories.sql
--- Luego puedes volver a correr 002_seed.sql para recargar el demo.
+-- Corremos 002_seed.sql para recargar el demo.?
 -- =============================================================================
 
 set search_path to tms, public;
