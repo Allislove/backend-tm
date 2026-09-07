@@ -49,6 +49,7 @@ Si la base ya existía de una versión anterior:
 ```bash
 psql -U postgres -d tickets_management -f sql/003_categories.sql
 psql -U postgres -d tickets_management -f sql/004_notifications.sql
+psql -U postgres -d tickets_management -f sql/005_ticket_number.sql
 psql -U postgres -d tickets_management -f sql/002_seed.sql
 ```
 

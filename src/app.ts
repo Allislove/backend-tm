@@ -29,6 +29,7 @@ export function createApp() {
 
   app.use(env.API_PREFIX, apiRouter);
   app.use(notFoundHandler);
+  /* Llamamos al handler para mapear los errores */
   app.use(errorHandler);
 
   return app;

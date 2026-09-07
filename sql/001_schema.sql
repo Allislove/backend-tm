@@ -185,16 +185,23 @@ create trigger trg_categories_updated_at
 before update on categories
 for each row execute procedure set_updated_at();
 
-/* Este método genera el identificador visible del ticket (TCK-0001, TCK-0002, ...). */
+/* Este método genera el identificador visible del ticket (TCK-0001, TCK-0002, ...).
+   Rellena a 4 dígitos solo si el número es más corto; nunca recorta, para que
+   10000 sea TCK-10000 y no TCK-1000 (lpad truncaría y choca con UNIQUE). */
 create or replace function next_ticket_number()
 returns text
 language plpgsql
 as $$
 declare
   next_value bigint;
+  digits text;
 begin
   next_value := nextval('tms.ticket_number_seq');
-  return 'TCK-' || lpad(next_value::text, 4, '0');
+  digits := next_value::text;
+  if length(digits) < 4 then
+    digits := lpad(digits, 4, '0');
+  end if;
+  return 'TCK-' || digits;
 end;
 $$;
 
